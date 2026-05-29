@@ -1,0 +1,15 @@
+#Files Leaver/Joiner/Mover LMC Default
+tomcat/file_config/SSF_Features
+tomcat/file_config/SSF_Frameworks
+tomcat/file_config/SSF_Tools
+tomcat/file_config/SSP_Tools
+tomcat/file_config/SSF_Features
+tomcat/file_config/ServiceDefinition
+
+#Files Install Configuration
+tomcat/file_install/ssb.zip
+tomcat/file_install/ssb/base/ga/identityiq-8.5.zip
+tomcat/file_install/ssb/base/patch/identityiq-8.5p1.jar
+
+#Scripts SQLServer
+sqlserver_iiq/scripts/*.sqlserver
