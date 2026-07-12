@@ -1,0 +1,72 @@
+services:
+    server_smtp:
+        container_name: server_email
+        image: axllent/mailpit:v1.27.7
+        ports: 
+            - 1025:1025
+            - 8025:8025
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.5
+    server_ldad:
+        container_name: ad_app_mock
+        build:
+            context: ./openldap
+        environment:
+            LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD}
+            LDAP_BASE_DN: ${LDAP_BASE_DN}
+            LDAP_ORGANISATION: ${LDAP_ORGANISATION}
+            LDAP_DOMAIN: ${LDAP_DOMAIN}
+        volumes: 
+            - ${LDAP_DATA_SCHEMA}:/bootstrap/schema/attributes.schema:ro
+            - ${LDAP_DATA}:/bootstrap/ldif/adata.ldif:ro
+        ports:
+            - 389:389
+            - 636:636
+        healthcheck:
+            test: [ "CMD-SHELL", "ldapsearch -x -H ldap://localhost:389 -b \"$${LDAP_BASE_DN}\" -s base >/dev/null" ]
+            timeout: 10s
+            retries: 20
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.4                       
+    server_db:
+        container_name: server_bd_sql
+        build: 
+            context: ./sqlserver_iiq
+        restart: always
+        ports: 
+            - 1433:1433
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.3         
+        command: 
+            bash -c "sh -x /tmp/entrypoint.sh"
+        healthcheck:
+            test: [ "CMD-SHELL", "SQLCMD=/opt/mssql-tools18/bin/sqlcmd; [ -x $$SQLCMD ] || SQLCMD=/opt/mssql-tools/bin/sqlcmd; $$SQLCMD -C -S localhost -U healthcheck -P Change@123 -Q 'SELECT 1'" ]
+            timeout: 10s
+            retries: 20    
+    server_web_iiq:
+        container_name: web_iiq
+        build: ./tomcat
+        restart: always
+        ports: 
+            - 8080:8080
+            - 9009:9009
+        networks:
+            rede_iiq:
+                ipv4_address: 10.5.0.2           
+        command: 
+            bash -c "sh -x /tmp/entrypoint.sh"
+        depends_on: 
+            server_db:
+                condition: service_healthy
+        volumes:
+            - ${DIRECTORY_TOMCAT_APPLICATION}:/opt/file/
+networks:
+  rede_iiq:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
