@@ -32,43 +32,43 @@
             <Argument name="record">
                 <Description>
           A List of data tokens parsed from the current line of the data file.
-        </Description>             
+        </Description>
             </Argument>
              <Argument name="cols">
              <Description>
           A List of the columns to use.
         </Description>
             </Argument>
-                            
-        
+
+
         </Inputs>
-                    
-        
+
+
         <Returns>
-                              
-            
+
+
             <Argument name="map">
-                                        
-                
+
+
                 <Description>
           A Map of the resource object assembled from the data.
         </Description>
-                                      
-            
+
+
             </Argument>
-                            
-        
+
+
         </Returns>
-                  
-    
+
+
     </Signature>
-          
-    
+
+
     <Source>
-                
+
         <![CDATA[
-                
-        
+
+
 import sailpoint.connector.DelimitedFileConnector;
 
 
@@ -80,16 +80,16 @@ String employeeStatus = (String)map.get("employeeStatus");
 //FALSE => Employee vacation
 //!Boolean.valueOf(employeeStatus)
 
-if(employeeStatus != null){  
+if(employeeStatus != null){
    map.put("IIQDisabled",!Boolean.valueOf(employeeStatus));
 }
 return map;
 
 
-            
+
     ]]>
-            
+
     </Source>
-        
+
 
 </Rule>

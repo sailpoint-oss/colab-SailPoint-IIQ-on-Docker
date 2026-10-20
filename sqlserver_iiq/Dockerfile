@@ -1,19 +1,7 @@
-FROM mcr.microsoft.com/mssql/server:2022-CU25-ubuntu-22.04
-
-ENV ACCEPT_EULA=Y
-
-#PASSWORD  SA
-ENV SA_PASSWORD=Change@123
-ENV CHECK_POLICY=OFF
-EXPOSE 1433
-
-#CREATE FOLDER SCRIPTS *.SQL
-RUN mkdir -pv /tmp/scripts
-
-#COPY SCRIPTS *.SQL IIQ FOR CONTAINERS 
-COPY ./scripts/* /tmp/scripts/
-
-RUN chmod +x /tmp/scripts/
-
-#COPY SCRIPTS *.SH FOR CONTAINERS
-COPY ./*.sh /tmp/
+FROM mcr.microsoft.com/mssql/server:2022-CU27-ubuntu-22.04
+COPY --chown=mssql:root scripts/ /opt/iiq-scripts/
+COPY --chown=mssql:root *.sh *.py /opt/iiq/
+USER root
+RUN chmod 0550 /opt/iiq/*.sh
+USER mssql
+ENTRYPOINT ["/opt/iiq/entrypoint.sh"]

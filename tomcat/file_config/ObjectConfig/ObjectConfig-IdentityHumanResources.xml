@@ -2,8 +2,8 @@
 <!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
 <sailpoint>
   <ImportAction name="merge">
- 
- 
+
+
 <ObjectConfig name="Identity">
     <ObjectAttribute displayName="att_email" editMode="ReadOnly" name="email" standard="true" type="string">
         <AttributeSource name="AppRule: Human Resources Email Human Resources">
@@ -68,15 +68,14 @@
     <ObjectAttribute displayName="att_identity_type" editMode="ReadOnly" name="type" standard="true" type="string">
         <AttributeSource name="AppRule: Human Resources Type Human Resources">
             <ApplicationRef>
-                <Reference class="sailpoint.object.Application" name="Human Resources"/>      
+                <Reference class="sailpoint.object.Application" name="Human Resources"/>
             </ApplicationRef>
-            <RuleRef>      
+            <RuleRef>
                 <Reference class="sailpoint.object.Rule" name="Human Resources Type"/>
             </RuleRef>
         </AttributeSource>
     </ObjectAttribute>
 </ObjectConfig>
- 
+
   </ImportAction>
  </sailpoint>
- 

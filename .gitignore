@@ -16,3 +16,42 @@ sqlserver_iiq/scripts/*.sqlserver
 
 # Windows downloaded file metadata
 *:Zone.Identifier
+
+# Local secrets and generated artifacts
+.env
+.env.*
+!.env.example
+.secrets/
+*.jks
+*.p12
+__pycache__/
+
+# Product packages, compiled code, local keys and development environments.
+# Applies to every version, including archives placed outside the documented paths.
+*.zip
+*.jar
+*.war
+*.ear
+*.class
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.exe
+*.dll
+*.so
+*.key
+*.pem
+*.crt
+*.keystore
+.venv/
+venv/
+.pytest_cache/
+**/create_identityiq*.sql*
+**/upgrade_identityiq*.sql*
+tomcat/file_install/ssb/web/
+tomcat/file_config/UI/UIConfig-Uiconfig.xml
+
+# Internal review reports belong in the ignored local workspace only.
+docs/auditoria-*.md
+docs/relatorio-*.md

@@ -1,8 +1,8 @@
-USE identityiq
+USE master
 GO
-CREATE LOGIN [healthcheck] WITH PASSWORD='Change@123',
-DEFAULT_DATABASE=identityiq
---create a user in our db associated with our server login and our schema
-CREATE USER healthcheck FOR LOGIN healthcheck WITH DEFAULT_SCHEMA =
-identityiq
+CREATE LOGIN [healthcheck] WITH PASSWORD='$(HEALTHCHECK_PASSWORD)', CHECK_POLICY=ON, DEFAULT_DATABASE=master
+GO
+CREATE USER healthcheck FOR LOGIN healthcheck
+GO
+GRANT CONNECT TO healthcheck
 GO
